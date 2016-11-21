@@ -15,6 +15,15 @@ $billy = new Application();
 
 $config = $billy->getPluginConfig($root);
 
-$billy->loadPlugin($config);
+register_activation_hook($plugin, function () use ($billy, $config, $root)
+{
+	$billy->loadPlugin($config);
+	$billy->activatePlugin($root);
+});
 
-$billy->activatePlugin($root);
+register_deactivation_hook($plugin, function () use ($billy, $root)
+{
+	$billy->deactivatePlugin($root);
+});
+
+$billy->loadPlugin($config);

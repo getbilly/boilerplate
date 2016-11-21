@@ -21,10 +21,6 @@ class Application extends Container
 	public function __construct()
 	{		
 		$this->registerBaseBindings();
-
-        // $this->singleton('database', function() {
-        //     return new Database();
-        // });
         
 		$this->singleton('database', 'Billy\Framework\Database');
         $this->registerDatabase();		
