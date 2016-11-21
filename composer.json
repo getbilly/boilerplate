@@ -1,0 +1,22 @@
+{
+	"name": "Billy Boilerplate",
+ 	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
+    "homepage": "https://github.com/jackabox/plate",
+    
+	"authors": [
+        {
+            "name": "Jack Whiting",
+            "email": "hi@jackwhiting.co.uk"
+        }
+    ],
+
+    "require": {
+    },
+
+	"autoload": {
+    	"psr-4": {
+			"MyPlugin\\": "app/",
+			"Billy\\Framework\\": "framework/"
+		}
+	}
+}
