@@ -16,6 +16,12 @@ class Application extends Container
 	public function __construct()
 	{		
 		$this->registerBaseBindings();
+        
+        $this->singleton(
+            'database', 
+            'Billy\Framework\Database'
+        );
+
         $this->registerDatabase();		
         $this->registerEnqueue();   
         $this->registerActions();
@@ -42,11 +48,6 @@ class Application extends Container
 
 	protected function registerDatabase()
 	{
-        $this->singleton(
-            'database', 
-            'Billy\Framework\Database'
-        );
-
 		$this->bind(
             'database', 
             $this['database']
@@ -123,7 +124,7 @@ class Application extends Container
 
 			$this->loadWith($activator, [
 				'enqueue',
-                'actions'
+                'action'
 			]);
 		}
 
@@ -144,7 +145,7 @@ class Application extends Container
 
 			$this->loadWith($deactivator, [
 				'enqueue',
-                'actions'
+                'action'
 			]);
 		}
 	}

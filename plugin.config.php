@@ -30,7 +30,7 @@ return [
      * Deactivate
      */
     'actions' => [
-        __DIR__ . '/app/actions.php'
+        __DIR__ . '/app/action.php'
     ],
 
     /**

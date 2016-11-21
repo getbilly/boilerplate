@@ -6,11 +6,11 @@ class AdminController {
 
 	public function __construct()
 	{
-		
+
 	}
 	
-	public function index()
+	public function menu()
 	{
-
+		dd('die');
 	}
 }
