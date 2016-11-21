@@ -5,6 +5,7 @@ namespace Billy\Framework;
 use Illuminate\Container\Container;
 use Billy\Framework\Database;
 use Billy\Framework\Enqueue;
+use Billy\Framework\Route;
 
 class Application extends Container
 {
@@ -20,14 +21,23 @@ class Application extends Container
 
 	public function __construct()
 	{		
+        
 		$this->registerBaseBindings();
         
-		$this->singleton('database', 'Billy\Framework\Database');
+		$this->singleton(
+            'database', 
+            'Billy\Framework\Database'
+        );
         $this->registerDatabase();		
 
-        $this->singleton('enqueue', 'Billy\Framework\Enqueue');
+        $this->singleton(
+            'enqueue', 
+            'Billy\Framework\Enqueue'
+        );
         $this->registerEnqueue();
 
+        $this->registerRoutes();
+     
 	}
 
 	/**
@@ -38,31 +48,86 @@ class Application extends Container
     {
         static::setInstance($this);
 
-        $this->instance('app', $this);
-        $this->instance('Illuminate\Container\Container', $this);
+        $this->instance(
+            'app', 
+            $this
+        );
+
+        $this->instance(
+            'Illuminate\Container\Container', 
+            $this
+        );
     }
 
 	protected function registerDatabase()
 	{
-		$this->bind('database', $this['database']);
+		$this->bind(
+            'database', 
+            $this['database']
+        );
 	}
 
 	protected function registerEnqueue()
 	{
-		$this->instance( 'enqueue',
+		$this->instance( 
+            'enqueue',
             $this->make('Billy\Framework\Enqueue')
         );
 		
-        $this->alias( 'enqueue', 'Billy\Framework\Enqueue' );
+        $this->alias( 
+            'enqueue', 
+            'Billy\Framework\Enqueue' 
+        );
 	}
+
+    public function registerRoutes()
+    {
+        $this->app->instance(
+            'route',
+            $this->app->make('Billy\Framework\Route', ['app' => $this->app])
+        );
+        
+        $this->app->alias(
+            'route',
+            'Billy\Framework\Route'
+        );
+    }
 
 	public function loadPlugin($config)
 	{
+        $this->loadPluginRoutes(
+            'route',
+            array_get($config, 'routes', [])
+        );
+
 		$this->loadPluginX(
             'enqueue',
             array_get($config, 'enqueue', [])
-        );
+        );   
 	}
+
+    /**
+     * Load all a plugin's routes.
+     *
+     * @param array $routes
+     * @return void
+     */
+    protected function loadPluginRoutes($x, $routes = [])
+    {
+        $container = $this;
+        $route = $this['route'];
+
+        foreach ($routes as $namespace => $requires) {
+            
+            $route->setNamespace($namespace);
+
+            foreach ((array) $requires as $require) {
+                @require_once "$require";
+            }
+
+            $route->unsetNamespace();
+        }
+    }
 
   	/**
      * Load all a plugin's :x.
@@ -97,6 +162,7 @@ class Application extends Container
 				'enqueue',
 			]);
 		}
+
 	}
 
     public function deactivatePlugin($root)
@@ -150,4 +216,17 @@ class Application extends Container
         return $this->configurations[$root];
     }
 
+    public function bootControllers()
+    {
+        // $directory = base_directory() . 'app/Controllers';
+        // $directory = new \RecursiveDirectoryIterator($directory);
+        // $iterator = new \RecursiveIteratorIterator($directory);
+        // $regex = new \RegexIterator($iterator, '/^.+\Controller.php$/i', \RecursiveRegexIterator::GET_MATCH);
+
+        // foreach ( $regex as $info ) {
+        //     var_dump($info);
+        // }
+
+        // die();
+    }
 }

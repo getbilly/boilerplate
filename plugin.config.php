@@ -30,6 +30,10 @@ return [
         __DIR__ . '/app/deactivate.php'
     ],
 
+    'routes' => [
+        __DIR__ . '/app/routes.php'
+    ],
+
     /**
      * The styles and scripts to auto-load.
      */
