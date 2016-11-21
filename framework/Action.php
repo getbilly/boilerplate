@@ -7,12 +7,11 @@ use InvalidArgumentException;
 
 class Action
 {
-	protected $app;
     protected $actions = [];
 	protected $namespace = null;
 
 	public function __construct()
-    {
+    {   
 		$this->boot();
 	}
 
@@ -30,11 +29,12 @@ class Action
 					break;
 			}
 		}
+        
 	}
 
 	public function add($data, $type = null) 
 	{
-		if (!is_null($uses)) {
+		if (!is_null($type)) {
 			$data['type'] = $type;
 		}
 
@@ -50,7 +50,7 @@ class Action
             if (isset($data[$key])) {
                 continue;
             }
-            throw new InvalidArgumentException("Missing {$key} definition for panel");
+            throw new InvalidArgumentException("Missing {$key} definition for action");
         }
 
 		if (!in_array($data['type'], ['admin', 'public'])) {
@@ -72,9 +72,9 @@ class Action
         }
 	}
 
-	protected function addPublicAction() 
+	protected function addPublicAction($action) 
 	{
-        if(!is_admin()) {
+        if(! is_admin()) {
             add_action(
                 $action['method'],
                 $action['uses'],
@@ -84,7 +84,7 @@ class Action
         }
 	}
 
-	/**
+    /**
      * Sets the current namespace.
      *
      * @param  string $namespace
@@ -103,68 +103,5 @@ class Action
     public function unsetNamespace()
     {
         $this->namespace = null;
-    }
-
-	/**
-     * Makes a callable for the action hook.
-     *
-     * @param $action
-     * @return callable
-     */
-    protected function makeCallable($action)
-    {
-        // return function () use ($action) {
-        //     return $this->handler($action);
-        // };
-    }
-
-	/**
-     * Return the correct callable based on action
-     *
-     * @param  array   $panel
-     * @param  boolean $strict
-     * @return void
-     */
-    protected function handler($panel, $strict = false)
-    {
-        // $callable = $uses = $panel['uses'];
-        // $method = strtolower($this->http->method());
-        // $action = strtolower($this->http->get('action', 'uses'));
-        // $callable = array_get($panel, $method, false) ?: $callable;
-        // if ($callable === $uses || is_array($callable))
-        // {
-        //     $callable = array_get($panel, $action, false) ?: $callable;
-        // }
-        // if ($callable === $uses || is_array($callable))
-        // {
-        //     $callable = array_get($panel, "{$method}.{$action}", false) ?: $callable;
-        // }
-        // if (is_array($callable))
-        // {
-        //     $callable = $uses;
-        // }
-        // if ($strict && $uses === $callable)
-        // {
-        //     return false;
-        // }
-        // try {
-        //     $this->call($callable);
-        // } catch (HttpErrorException $e) {
-        //     if ($e->getStatus() === 301 || $e->getStatus() === 302)
-        //     {
-        //         $this->call(function () use (&$e)
-        //         {
-        //             return $e->getResponse();
-        //         });
-        //     }
-        //     global $wp_query;
-        //     $wp_query->set_404();
-        //     status_header($e->getStatus());
-        //     define('HERBERT_HTTP_ERROR_CODE', $e->getStatus());
-        //     define('HERBERT_HTTP_ERROR_MESSAGE', $e->getMessage());
-        //     Notifier::error('<strong>' . $e->getStatus() . '</strong>: ' . $e->getMessage());
-        //     do_action('admin_notices');
-        // }
-        // return true;
     }
 }

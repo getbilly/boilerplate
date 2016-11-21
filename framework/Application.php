@@ -81,16 +81,16 @@ class Application extends Container
 	}
 
 	public function loadPlugin($config)
-	{
-		$this->loadPluginX(
-            'enqueue',
-            array_get($config, 'enqueue', [])
-        );   
-
-        $this->loadPluginX(
+	{  
+        $this->loadPluginActions(
             'action',
             array_get($config, 'actions', [])
         );  
+
+		$this->loadPluginX(
+            'enqueue',
+            array_get($config, 'enqueue', [])
+        );         
 	}
 
   	/**
@@ -109,6 +109,29 @@ class Application extends Container
         }
     }
 
+    /**
+     * Load all a plugin's actions.
+     *
+     * @param array $panels
+     * @return void
+     */
+    protected function loadPluginActions($x, $actions = [])
+    {
+        $container = $this;
+        $action = $this['action'];
+
+        foreach ($actions as $namespace => $requires)
+        {
+            $action->setNamespace($namespace);
+            
+            foreach ((array) $requires as $require) {
+                @require_once "$require";
+            }
+
+            $action->unsetNamespace();
+        }
+    }
+
 	public function activatePlugin($root)
 	{
 		# get the plugin file
@@ -123,8 +146,7 @@ class Application extends Container
             }
 
 			$this->loadWith($activator, [
-				'enqueue',
-                'action'
+				'enqueue'
 			]);
 		}
 
@@ -144,8 +166,7 @@ class Application extends Container
             }
 
 			$this->loadWith($deactivator, [
-				'enqueue',
-                'action'
+				'enqueue'
 			]);
 		}
 	}
@@ -180,19 +201,5 @@ class Application extends Container
             $this->configurations[$root] = @require_once "$root/plugin.config.php" ?: [];
         }
         return $this->configurations[$root];
-    }
-
-    public function bootControllers()
-    {
-        // $directory = base_directory() . 'app/Controllers';
-        // $directory = new \RecursiveDirectoryIterator($directory);
-        // $iterator = new \RecursiveIteratorIterator($directory);
-        // $regex = new \RegexIterator($iterator, '/^.+\Controller.php$/i', \RecursiveRegexIterator::GET_MATCH);
-
-        // foreach ( $regex as $info ) {
-        //     var_dump($info);
-        // }
-
-        // die();
     }
 }
