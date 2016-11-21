@@ -2,6 +2,8 @@
 
 namespace MyPlugin;
 
+use Billy\Framework\Models\Taxonomy as Taxonomy;
+
 class Application 
 {
 	public function __construct()
@@ -21,6 +23,6 @@ class Application
 
 	public static function run()
 	{
-		
+		// dd(Taxonomy::all());
 	}
 }

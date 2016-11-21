@@ -1,11 +1,3 @@
 <?php 
 
-namespace MyPlugin;
-
-class Activate
-{
-	public static function run() 
-	{
-
-	}
-}
+/** @var  \Billy\Framework\Enqueue $enqueue */
