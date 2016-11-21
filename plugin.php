@@ -27,11 +27,3 @@ require_once __DIR__ . '/vendor/autoload.php';
  * JB Plugin Autoloader
  */ 
 require_once __DIR__ . '/framework/bootstrap/autoload.php';
-
-/**
- * Enqueues: Probably could do with an auto 
- * way to load this not dependant on directory
- */
-require_once __DIR__ . '/app/enqueue.php';
-
-MyPlugin\Application::run();

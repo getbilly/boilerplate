@@ -103,6 +103,25 @@ class Application extends Container
 		}
 	}
 
+    public function deactivatePlugin($root)
+	{
+		# get the plugin file
+		$plugin = $root . 'plugin.php';
+
+		$config = $this->getPluginConfig($root);
+	
+ 		foreach (array_get($config, 'dectivators', []) as $deactivator) {
+			 
+            if ( ! file_exists($deactivator)) {
+                continue;
+            }
+
+			$this->loadWith($deactivator, [
+				'enqueue',
+			]);
+		}
+	}
+
 	/**
      * Loads a file with variables in scope.
      *
