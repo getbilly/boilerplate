@@ -5,39 +5,20 @@ namespace Billy\Framework;
 use Illuminate\Container\Container;
 use Billy\Framework\Database;
 use Billy\Framework\Enqueue;
-use Billy\Framework\Route;
+use Billy\Framework\Action;
 
 class Application extends Container
 {
 	protected static $instance;
-
-	/**
-     * The plugin configurations.
-     *
-     * @var array
-     */
+    
     protected $configurations = [];
-
 
 	public function __construct()
 	{		
-        
 		$this->registerBaseBindings();
-        
-		$this->singleton(
-            'database', 
-            'Billy\Framework\Database'
-        );
         $this->registerDatabase();		
-
-        $this->singleton(
-            'enqueue', 
-            'Billy\Framework\Enqueue'
-        );
-        $this->registerEnqueue();
-
-        $this->registerRoutes();
-     
+        $this->registerEnqueue();   
+        $this->registerActions();
 	}
 
 	/**
@@ -61,6 +42,11 @@ class Application extends Container
 
 	protected function registerDatabase()
 	{
+        $this->singleton(
+            'database', 
+            'Billy\Framework\Database'
+        );
+
 		$this->bind(
             'database', 
             $this['database']
@@ -80,54 +66,31 @@ class Application extends Container
         );
 	}
 
-    public function registerRoutes()
-    {
-        $this->app->instance(
-            'route',
-            $this->app->make('Billy\Framework\Route', ['app' => $this->app])
+    protected function registerActions()
+	{
+		$this->instance( 
+            'action',
+            $this->make('Billy\Framework\Action')
         );
-        
-        $this->app->alias(
-            'route',
-            'Billy\Framework\Route'
+		
+        $this->alias( 
+            'action', 
+            'Billy\Framework\Action' 
         );
-    }
+	}
 
 	public function loadPlugin($config)
 	{
-        $this->loadPluginRoutes(
-            'route',
-            array_get($config, 'routes', [])
-        );
-
 		$this->loadPluginX(
             'enqueue',
             array_get($config, 'enqueue', [])
         );   
+
+        $this->loadPluginX(
+            'action',
+            array_get($config, 'actions', [])
+        );  
 	}
-
-    /**
-     * Load all a plugin's routes.
-     *
-     * @param array $routes
-     * @return void
-     */
-    protected function loadPluginRoutes($x, $routes = [])
-    {
-        $container = $this;
-        $route = $this['route'];
-
-        foreach ($routes as $namespace => $requires) {
-            
-            $route->setNamespace($namespace);
-
-            foreach ((array) $requires as $require) {
-                @require_once "$require";
-            }
-
-            $route->unsetNamespace();
-        }
-    }
 
   	/**
      * Load all a plugin's :x.
@@ -160,6 +123,7 @@ class Application extends Container
 
 			$this->loadWith($activator, [
 				'enqueue',
+                'actions'
 			]);
 		}
 
@@ -180,6 +144,7 @@ class Application extends Container
 
 			$this->loadWith($deactivator, [
 				'enqueue',
+                'actions'
 			]);
 		}
 	}

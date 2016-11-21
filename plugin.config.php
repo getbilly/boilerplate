@@ -11,18 +11,14 @@ return [
      * The asset path.
      */
     'assets' => '/resources/assets/',
-    
-    /**
-     * The tables to manage.
-     */
-    'tables' => [
-    ],
+
     /**
      * Activate
      */
     'activators' => [
         __DIR__ . '/app/activate.php'
     ],
+
     /**
      * Deactivate
      */
@@ -30,8 +26,11 @@ return [
         __DIR__ . '/app/deactivate.php'
     ],
 
-    'routes' => [
-        __DIR__ . '/app/routes.php'
+    /**
+     * Deactivate
+     */
+    'actions' => [
+        __DIR__ . '/app/actions.php'
     ],
 
     /**
