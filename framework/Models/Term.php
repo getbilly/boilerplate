@@ -1,6 +1,6 @@
 <?php 
 
-namespace Plate\Models;
+namespace Billy\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

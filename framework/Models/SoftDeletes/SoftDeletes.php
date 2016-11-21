@@ -1,6 +1,6 @@
 <?php 
 
-namespace Plate\Models\SoftDeletes;
+namespace Billy\Framework\Models\SoftDeletes;
 
 use Illuminate\Database\Eloquent\SoftDeletes as BaseSoftDeletes;
 

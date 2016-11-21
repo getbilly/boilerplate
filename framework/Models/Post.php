@@ -1,10 +1,10 @@
 <?php 
 
-namespace Plate\Models;
+namespace Billy\Framework\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Herbert\Framework\Models\SoftDeletes\SoftDeletes;
+use Billy\Framework\Models\SoftDeletes\SoftDeletes;
 
 class Post extends Model {
 
