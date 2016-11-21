@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Ensure this is only ran once.
- */
-if (defined('PlATE_AUTOLOAD')) return;
-define('PlATE_AUTOLOAD', microtime(true));
+use Billy\Framework\Application;
 
-@require 'globals.php';
+if ( ! file_exists(__DIR__ . '/globals.php'))
+    throw new Exception("Globals file not found.");
 
-// initiate db set up
-new \Billy\Framework\Database();
+require __DIR__ . '/globals.php';
 
+$billy = new Application();
