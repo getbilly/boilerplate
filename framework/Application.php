@@ -3,29 +3,28 @@
 namespace Billy\Framework;
 
 use Illuminate\Container\Container;
+
 use Billy\Framework\Database;
 use Billy\Framework\Enqueue;
 use Billy\Framework\Action;
+use Billy\Framework\Twig;
 
 class Application extends Container
 {
 	protected static $instance;
-    
+
     protected $configurations = [];
+    protected $viewComposers = [];
+    protected $viewGlobals = [];
+    protected $builtViewGlobals = null;
 
 	public function __construct()
 	{		
 		$this->registerBaseBindings();
-        
-        $this->singleton(
-            'database', 
-            'Billy\Framework\Database'
-        );
-
         $this->registerDatabase();		
         $this->registerEnqueue();   
         $this->registerActions();
-	}
+    }
 
 	/**
      * Register the basic bindings into the container.
@@ -48,6 +47,11 @@ class Application extends Container
 
 	protected function registerDatabase()
 	{
+        $this->singleton(
+            'database', 
+            'Billy\Framework\Database'
+        );
+
 		$this->bind(
             'database', 
             $this['database']
@@ -79,6 +83,7 @@ class Application extends Container
             'Billy\Framework\Action' 
         );
 	}
+    
 
 	public function loadPlugin($config)
 	{  
@@ -90,7 +95,8 @@ class Application extends Container
 		$this->loadPluginX(
             'enqueue',
             array_get($config, 'enqueue', [])
-        );         
+        ); 
+    
 	}
 
   	/**
@@ -130,7 +136,7 @@ class Application extends Container
 
             $action->unsetNamespace();
         }
-    }
+    }  
 
 	public function activatePlugin($root)
 	{
@@ -146,7 +152,8 @@ class Application extends Container
             }
 
 			$this->loadWith($activator, [
-				'enqueue'
+				'enqueue',
+                'twig'
 			]);
 		}
 
@@ -166,7 +173,8 @@ class Application extends Container
             }
 
 			$this->loadWith($deactivator, [
-				'enqueue'
+				'enqueue',
+                'twig'
 			]);
 		}
 	}

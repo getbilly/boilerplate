@@ -4,7 +4,7 @@ namespace MyPlugin;
 
 $action->add([
 	'type'		=> 'admin',
-	'method'	=> 'init',
+	'method'	=> 'admin_menu',
 	'uses'		=> [__NAMESPACE__ . '\Controllers\AdminController', 'menu']
 ]);
 

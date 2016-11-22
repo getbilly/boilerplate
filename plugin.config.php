@@ -38,5 +38,5 @@ return [
      */
     'enqueue' => [
         __DIR__ . '/app/enqueue.php'
-    ],
+    ]
 ];

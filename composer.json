@@ -14,7 +14,8 @@
         "illuminate/database": "5.0.*",
         "illuminate/events": "~5.0.0",
         "illuminate/http": "~5.0",
-        "symfony/var-dumper": "^3.1"
+        "symfony/var-dumper": "^3.1",
+		"twig/twig": "^1.28"
     },
 
 	"autoload": {
