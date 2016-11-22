@@ -7,24 +7,11 @@ use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_SimpleFunction;
 
-class Twig
+class View
 {
-
-	protected static $instance;
 	public static $template;
-
 	public static $loader;
 	public static $twig; 
-
-	/**
-	 * Initialize the plugin.
-	 *
-	 * @since     1.0.0
-	 */
-	public function __construct()
-	{
-		
-	}
 
 	public function constructTwig()
 	{
@@ -69,7 +56,7 @@ class Twig
 	protected function variables()
 	{
 		# Here we set some default global variables
-		$variables = [
+		return [
 			'site' => [
 				'lang_attributes' 		=> get_bloginfo('language'),
 				'charset' 				=> get_bloginfo('charset'),
@@ -79,13 +66,11 @@ class Twig
 				'description' 			=> get_bloginfo('description')
 			]
 		];
-
-		return $variables;
 	}
 
 	protected function functions()
 	{
-		$functions = [
+		return [
 			'dd',
 			'wp_head',
 			'wp_footer',
@@ -93,8 +78,6 @@ class Twig
 			'body_class',
 			'wp_nav_menu'
 		];
-
-		return $functions;
 	}
 
 	/**
@@ -102,31 +85,18 @@ class Twig
 	 *
 	 * @param   string   $template      The name of the template that is to be rendered
 	 * @param   array    $vals          An array of variables that are to be rendered with the template
-	 * @since 1.0.0
+	 * @param   boolean  $echo          Boolean of whether to echo or return the twig render
 	 */
 	public function render($template, $vals, $echo = true)
 	{
+		# Construct the twig 
 		self::constructTwig();
 
 		# Check whether we are echoing or returning
-		if (true === $echo) {
+		if ($echo === true) {
 			echo self::$twig->render($template, $vals);
 		} else {
 			return self::$twig->render($template, $vals);
 		}
-	}
-
-	/**
-	 * Return an instance of this class.
-	 * @return    object    A single instance of this class.
-	 */
-	public static function instance()
-	{
-		# If the single instance hasn't been set, set it now.
-		if (null === self::$instance) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
 	}
 }
