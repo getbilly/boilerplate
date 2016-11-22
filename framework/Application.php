@@ -3,20 +3,16 @@
 namespace Billy\Framework;
 
 use Illuminate\Container\Container;
-
 use Billy\Framework\Database;
 use Billy\Framework\Enqueue;
 use Billy\Framework\Action;
-use Billy\Framework\Twig;
 
 class Application extends Container
 {
-	protected static $instance;
 
+	protected static $instance;
+    
     protected $configurations = [];
-    protected $viewComposers = [];
-    protected $viewGlobals = [];
-    protected $builtViewGlobals = null;
 
 	public function __construct()
 	{		
