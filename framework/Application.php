@@ -1,34 +1,18 @@
-<?php
-
-namespace Billy\Framework;
+<?php namespace Billy\Framework;
 
 use Illuminate\Container\Container;
-use Billy\Framework\Database;
-use Billy\Framework\Enqueue;
-use Billy\Framework\Action;
 
 class Application extends Container
 {
-
 	protected static $instance;
     
     protected $configurations = [];
 
 	public function __construct()
 	{		
-		$this->registerBaseBindings();
-        $this->registerDatabase();		
-        $this->registerEnqueue();   
-        $this->registerActions();
-    }
-
-	/**
-     * Register the basic bindings into the container.
-     * @return void
-     */
-    protected function registerBaseBindings()
-    {
         static::setInstance($this);
+
+        $this->registerDatabase();
 
         $this->instance(
             'app', 
@@ -39,51 +23,40 @@ class Application extends Container
             'Illuminate\Container\Container', 
             $this
         );
-    }
-
-	protected function registerDatabase()
-	{
-        $this->singleton(
-            'database', 
-            'Billy\Framework\Database'
-        );
-
-		$this->bind(
-            'database', 
-            $this['database']
-        );
-	}
-
-	protected function registerEnqueue()
-	{
-		$this->instance( 
+        
+        $this->instance( 
             'enqueue',
             $this->make('Billy\Framework\Enqueue')
         );
-		
-        $this->alias( 
-            'enqueue', 
-            'Billy\Framework\Enqueue' 
-        );
-	}
 
-    protected function registerActions()
-	{
-		$this->instance( 
+        $this->alias(
+            'enqueue', 
+            'Billy\Framework\Enqueue'
+        );
+
+        $this->instance( 
             'action',
             $this->make('Billy\Framework\Action')
-        );
-		
-        $this->alias( 
+        );  
+
+        $this->alias(
             'action', 
-            'Billy\Framework\Action' 
+            'Billy\Framework\Action'
         );
-	}
-    
+    }
+
+	/**
+     * Register the basic bindings into the container.
+     * @return void
+     */
+    protected function registerDatabase()
+    {
+        return new \Billy\Framework\Database;     
+    }  
 
 	public function loadPlugin($config)
 	{  
-        $this->loadPluginActions(
+        $this->loadPluginX(
             'action',
             array_get($config, 'actions', [])
         );  
@@ -92,7 +65,6 @@ class Application extends Container
             'enqueue',
             array_get($config, 'enqueue', [])
         ); 
-    
 	}
 
   	/**
@@ -111,44 +83,39 @@ class Application extends Container
         }
     }
 
-    /**
-     * Load all a plugin's actions.
-     *
-     * @param array $panels
-     * @return void
-     */
-    protected function loadPluginActions($x, $actions = [])
-    {
-        $container = $this;
-        $action = $this['action'];
+    // /**
+    //  * Load all a plugin's actions.
+    //  *
+    //  * @param array $panels
+    //  * @return void
+    //  */
+    // protected function loadPluginActions($x, $actions = [])
+    // {
+    //     $container = $this;
+    //     $action = $this['action'];
 
-        foreach ($actions as $namespace => $requires)
-        {
-            $action->setNamespace($namespace);
+    //     foreach ($actions as $namespace => $requires) {
+    //         $action->setNamespace($namespace);
             
-            foreach ((array) $requires as $require) {
-                @require_once "$require";
-            }
+    //         foreach ((array) $requires as $require) {
+    //             @require_once "$require";
+    //         }
 
-            $action->unsetNamespace();
-        }
-    }  
+    //         $action->unsetNamespace();
+    //     }
+    // }  
 
 	public function activatePlugin($root)
 	{
-		# get the plugin file
-		$plugin = $root . 'plugin.php';
-
 		$config = $this->getPluginConfig($root);
 	
  		foreach (array_get($config, 'activators', []) as $activator) {
-			 
-            if ( ! file_exists($activator)) {
+            if (! file_exists($activator)) 
                 continue;
-            }
 
 			$this->loadWith($activator, [
-				'enqueue'
+				'enqueue',
+                'action'
 			]);
 		}
 
@@ -156,19 +123,15 @@ class Application extends Container
 
     public function deactivatePlugin($root)
 	{
-		# get the plugin file
-		$plugin = $root . 'plugin.php';
-
 		$config = $this->getPluginConfig($root);
 	
  		foreach (array_get($config, 'dectivators', []) as $deactivator) {
-			 
-            if ( ! file_exists($deactivator)) {
+            if ( ! file_exists($deactivator))
                 continue;
-            }
 
 			$this->loadWith($deactivator, [
-				'enqueue'
+				'enqueue',
+                'action'
 			]);
 		}
 	}
@@ -202,6 +165,7 @@ class Application extends Container
  		if ( ! isset($this->configurations[$root])) {
             $this->configurations[$root] = @require_once "$root/plugin.config.php" ?: [];
         }
+        
         return $this->configurations[$root];
     }
 }
