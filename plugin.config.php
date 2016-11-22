@@ -11,6 +11,8 @@ return [
      * The asset path.
      */
     'assets' => '/resources/assets/',
+    
+    'views' => __DIR__ . '/resources/views',
 
     /**
      * Activate

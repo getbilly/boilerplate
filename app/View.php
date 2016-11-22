@@ -1,6 +1,6 @@
 <?php 
 
-namespace Billy\Framework;
+namespace MyPlugin;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -15,10 +15,9 @@ class View
 
 	public function constructTwig()
 	{
-		$directory = base_directory() . 'resources/views/';
-
-		self::$loader = new Twig_Loader_Filesystem($directory);
-
+		self::$loader = new Twig_Loader_Filesystem();
+		self::$loader->addPath(Helper::get('views'), __NAMESPACE__);
+		
 		self::$twig = new Twig_Environment(self::$loader, self::environment());
 
 		if (defined('WP_DEBUG') && true === WP_DEBUG) {
@@ -30,8 +29,9 @@ class View
 		}
 
 		foreach (self::functions() as $function) {
-            self::$twig->addFunction(new Twig_SimpleFunction($function, $function));
-        }
+			self::$twig->addFunction(new Twig_SimpleFunction($function, $function));
+		}
+		
 	}
 
 

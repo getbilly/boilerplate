@@ -148,8 +148,7 @@ class Application extends Container
             }
 
 			$this->loadWith($activator, [
-				'enqueue',
-                'twig'
+				'enqueue'
 			]);
 		}
 
@@ -169,8 +168,7 @@ class Application extends Container
             }
 
 			$this->loadWith($deactivator, [
-				'enqueue',
-                'twig'
+				'enqueue'
 			]);
 		}
 	}

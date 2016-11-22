@@ -10,3 +10,7 @@ $action->add([
 
 /* Can we clean this up later? */
 $action->boot();
+
+return View::render('@MyPlugin/example.twig', [
+	'title' => 'TITLE'
+]);
