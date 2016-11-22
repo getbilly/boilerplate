@@ -1,8 +1,5 @@
 <?php
 
-use Billy\Framework\Application;
-use Billy\Framework\Twig;
-
 if ( ! file_exists(__DIR__ . '/globals.php'))
     throw new Exception("Globals file not found.");
 
@@ -12,7 +9,7 @@ $root = base_directory();
 
 $plugin = $root . 'plugin.php';
 
-$billy = new Application();
+$billy = new Billy\Framework\Application();
 
 $config = $billy->getPluginConfig($root);
 
