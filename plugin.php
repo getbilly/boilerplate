@@ -1,15 +1,15 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name: 	JB Plate
- * Plugin URI: 		https://jackabox.github.io/plate
- * Description: 	Core functionality for WordPress Development.
- * Version: 		0.3.0
+ * Plugin Name: 	Billy Boilerplate
+ * Plugin URI: 		https://getbilly.github.io/boilerplate
+ * Description: 	Boilerplate for rapid plugin development. Built initially for Adtrak.
+ * Version: 		0.1.0b
  * Author: 			Jack Whiting
  * Author URI: 		https://jackwhiting.co.uk
  * License: 		GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:     boilerplate
+ * Text Domain:     billy
  */
 
 # if this file is called directly, abort
