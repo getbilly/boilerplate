@@ -7,30 +7,7 @@ use InvalidArgumentException;
 
 class Action
 {
-    protected $actions = [];
 	protected $namespace = null;
-
-	public function __construct()
-    {   
-		$this->boot();
-	}
-
-	public function boot()
-	{
-		foreach ($this->actions as $action) {
-			switch ($action['type']) {
-				case 'admin':
-					$this->addAdminAction($action);
-					break;
-				case 'public':
-					$this->addPublicAction($action);
-					break;
-				default:
-					break;
-			}
-		}
-        
-	}
 
 	public function add($data, $type = null) 
 	{
@@ -57,7 +34,16 @@ class Action
             throw new InvalidArgumentException("Unknown action type '{$data['type']}'");
         }
 
-		$this->actions[] = $data;
+        switch ($data['type']) {
+            case 'admin':
+                $this->addAdminAction($data);
+                break;
+            case 'public':
+                $this->addPublicAction($data);
+                break;
+            default:
+                break;
+        }
 	}
 
 	protected function addAdminAction($action)
