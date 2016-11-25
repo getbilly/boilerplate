@@ -35,13 +35,13 @@ class Application extends Container
         );
 
         $this->instance( 
-            'action',
-            $this->make('Billy\Framework\Action')
+            'loader',
+            $this->make('Billy\Framework\Loader')
         );  
 
         $this->alias(
-            'action', 
-            'Billy\Framework\Action'
+            'loader', 
+            'Billy\Framework\Loader'
         );
     }
 
@@ -57,8 +57,8 @@ class Application extends Container
 	public function loadPlugin($config)
 	{  
         $this->loadPluginX(
-            'action',
-            array_get($config, 'actions', [])
+            'loader',
+            array_get($config, 'loader', [])
         );  
 
 		$this->loadPluginX(
@@ -83,27 +83,6 @@ class Application extends Container
         }
     }
 
-    // /**
-    //  * Load all a plugin's actions.
-    //  *
-    //  * @param array $panels
-    //  * @return void
-    //  */
-    // protected function loadPluginActions($x, $actions = [])
-    // {
-    //     $container = $this;
-    //     $action = $this['action'];
-
-    //     foreach ($actions as $namespace => $requires) {
-    //         $action->setNamespace($namespace);
-            
-    //         foreach ((array) $requires as $require) {
-    //             @require_once "$require";
-    //         }
-
-    //         $action->unsetNamespace();
-    //     }
-    // }  
 
 	public function activatePlugin($root)
 	{

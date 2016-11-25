@@ -5,16 +5,12 @@ namespace Billy\Framework;
 use Exception;
 use InvalidArgumentException;
 
-class Action
+class Loader
 {
 	protected $namespace = null;
 
-	public function add($data, $type = null) 
+	protected function add($data) 
 	{
-		if (!is_null($type)) {
-			$data['type'] = $type;
-		}
-
 		if(!isset($data['priority'])) {
 			$data['priority'] = 10;
 		}
@@ -35,42 +31,36 @@ class Action
         }
 
         switch ($data['type']) {
-            case 'admin':
-                $this->addAdminAction($data);
+            case 'filter':
+                add_filter($data['method'], $data['uses'], $data['priority'], $data['args']);
                 break;
-            case 'public':
-                $this->addPublicAction($data);
+            case 'action':
+                add_action($data['method'], $data['uses'], $data['priority'], $data['args']);
                 break;
             default:
                 break;
         }
 	}
 
-	protected function addAdminAction($action)
+    public function filter($data, $type = null)
+    {
+	    if (!is_null($type)) {
+			$data['type'] = 'filter';
+		}
+
+        $this->add($data);
+    }
+
+	public function action($action)
 	{
-        if (is_admin()) {
-            add_action(
-                $action['method'],
-                $action['uses'],
-                $action['priority'],
-                $action['args']
-            );
-        }
+	    if (!is_null($type)) {
+			$data['type'] = 'action';
+		}
+
+        $this->add($data);
 	}
 
-	protected function addPublicAction($action) 
-	{
-        if(! is_admin()) {
-            add_action(
-                $action['method'],
-                $action['uses'],
-                $action['priority'],
-                $action['args']
-            );
-        }
-	}
-
-    /**
+	/**
      * Sets the current namespace.
      *
      * @param  string $namespace

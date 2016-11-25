@@ -12,6 +12,9 @@ return [
      */
     'assets' => '/resources/assets/',
     
+    /**
+     * Views
+     */
     'views' => __DIR__ . '/resources/views',
 
     /**
@@ -29,10 +32,10 @@ return [
     ],
 
     /**
-     * Deactivate
+     * Loader
      */
-    'actions' => [
-        __DIR__ . '/app/action.php'
+    'loader' => [
+        __DIR__ . '/app/loader.php'
     ],
 
     /**

@@ -31,9 +31,7 @@ class View
 		foreach (self::functions() as $function) {
 			self::$twig->addFunction(new Twig_SimpleFunction($function, $function));
 		}
-		
 	}
-
 
 	protected function environment()
 	{
