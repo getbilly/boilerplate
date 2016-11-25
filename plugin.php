@@ -19,4 +19,4 @@ define('JB_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 define('JB_PLUGIN_url', plugin_dir_url( __FILE__ ));
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/framework/bootstrap/autoload.php';
+require_once __DIR__ . '/vendor/getbilly/framework/bootstrap/autoload.php';
