@@ -1,7 +1,7 @@
 {
-	"name": "Billy Boilerplate",
+	"name": "getbilly/boilerplate",
  	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
-    "homepage": "https://github.com/jackabox/plate",
+    "homepage": "https://github.com/getbilly/boilerplate",
     
 	"authors": [
         {
@@ -10,22 +10,9 @@
         }
     ],
 
-    "repositories": [
-        {
-            "url": "https://github.com/getbilly/framework.git",
-            "type": "git"
-        }
-    ],
-
     "require": {
-        "getbilly/framework" : "dev"
+        "getbilly/framework" : "dev-master"
     },
-
-    "config": {
-        "preferred-install": "dist"
-    },
-    
-    "minimum-stability": "dev",
 
 	"autoload": {
     	"psr-4": {
