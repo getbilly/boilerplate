@@ -1,3 +1,3 @@
-<?php
+<?php namespace MyPlugin;
 
-namespace MyPlugin;
+/** @var \Billy\Framework\Loader $loader */
