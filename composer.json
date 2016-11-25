@@ -10,18 +10,26 @@
         }
     ],
 
+    "repositories": [
+        {
+            "url": "https://github.com/getbilly/framework.git",
+            "type": "git"
+        }
+    ],
+
     "require": {
-        "illuminate/database": "5.0.*",
-        "illuminate/events": "~5.0.0",
-        "illuminate/http": "~5.0",
-        "symfony/var-dumper": "^3.1",
-		"twig/twig": "^1.28"
+        "getbilly/framework" : "dev"
     },
+
+    "config": {
+        "preferred-install": "dist"
+    },
+    
+    "minimum-stability": "dev",
 
 	"autoload": {
     	"psr-4": {
-			"MyPlugin\\": "app/",
-			"Billy\\Framework\\": "framework/"
+			"MyPlugin\\": "app/"
 		}
 	}
 }
