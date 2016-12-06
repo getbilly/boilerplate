@@ -13,10 +13,10 @@ class View
 	public static $loader;
 	public static $twig; 
 
-	public function constructTwig()
+	public static function constructTwig()
 	{
 		self::$loader = new Twig_Loader_Filesystem();
-		self::$loader->addPath(Helper::get('views'), __NAMESPACE__);
+		self::$loader->addPath(Helper::get('views'));
 		
 		self::$twig = new Twig_Environment(self::$loader, self::environment());
 
@@ -33,7 +33,7 @@ class View
 		}
 	}
 
-	protected function environment()
+	protected static function environment()
 	{
 		$envSettings = [
 			'charset' 			=> 'utf-8',
@@ -51,7 +51,7 @@ class View
 		return $envSettings;
 	}
 
-	protected function variables()
+	protected static function variables()
 	{
 		# Here we set some default global variables
 		return [
@@ -66,7 +66,7 @@ class View
 		];
 	}
 
-	protected function functions()
+	protected static function functions()
 	{
 		return [
 			'dd',
@@ -85,7 +85,7 @@ class View
 	 * @param   array    $vals          An array of variables that are to be rendered with the template
 	 * @param   boolean  $echo          Boolean of whether to echo or return the twig render
 	 */
-	public function render($template, $vals, $echo = true)
+	public static function render($template, $vals, $echo = true)
 	{
 		# Construct the twig 
 		self::constructTwig();
