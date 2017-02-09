@@ -5,13 +5,18 @@ return [
 	/**
      * The version constraint.
      */
-    'version' => '0.2',
+    'version' => '1.0',
 
     /**
      * The asset path.
      */
     'assets' => '/resources/assets/',
-    
+
+    /**
+     * Sentry url
+     */
+    'sentryUrl' => '',
+
     /**
      * Views
      */

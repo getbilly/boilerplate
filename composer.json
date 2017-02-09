@@ -11,12 +11,13 @@
     ],
 
     "require": {
-        "getbilly/framework" : "dev-master"
+        "getbilly/framework" : "dev-master",
+        "sentry/sentry": "^1.6"
     },
 
 	"autoload": {
     	"psr-4": {
-			"MyPlugin\\": "app/"
+			"LicenseManager\\": "app/"
 		}
 	}
 }

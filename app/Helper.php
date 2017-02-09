@@ -1,5 +1,4 @@
 <?php 
-
 namespace MyPlugin;
 
 class Helper 
