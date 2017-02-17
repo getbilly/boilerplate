@@ -26,7 +26,7 @@ return [
      * Activate
      */
     'activators' => [
-        __DIR__ . '/app/activater.php'
+        __DIR__ . '/app/activate.php'
     ],
 
     /**
