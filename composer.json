@@ -11,7 +11,7 @@
     ],
 
     "require": {
-        "getbilly/framework" : "dev-master",
+        "getbilly/framework" : "0.2.*",
         "sentry/sentry": "^1.6"
     },
 
