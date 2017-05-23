@@ -2,7 +2,7 @@
 	"name": "getbilly/boilerplate",
  	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
     "homepage": "https://github.com/getbilly/boilerplate",
-    
+
 	"authors": [
         {
             "name": "Jack Whiting",
@@ -11,8 +11,7 @@
     ],
 
     "require": {
-        "getbilly/framework" : "0.2.*",
-        "sentry/sentry": "^1.6"
+        "getbilly/framework" : "0.2.*"
     },
 
 	"autoload": {

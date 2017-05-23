@@ -4,7 +4,7 @@
  * Plugin Name: 	Billy Boilerplate
  * Plugin URI: 		https://getbilly.github.io/boilerplate
  * Description: 	Boilerplate for rapid plugin development. Built initially for Adtrak.
- * Version: 		0.1.0b
+ * Version: 		0.2.0b
  * Author: 			Jack Whiting
  * Author URI: 		https://jackwhiting.co.uk
  * License: 		GPL-2.0+
