@@ -1,7 +1,7 @@
 <?php
 
 return [
-	
+
 	/**
      * The version constraint.
      */
@@ -10,17 +10,17 @@ return [
     /**
      * The asset path.
      */
-    'assets' => '/resources/assets/',
-
-    /**
-     * Sentry url
-     */
-    'sentryUrl' => '',
+    'assets' => __DIR__ . '/resources/assets/',
 
     /**
      * Views
      */
     'views' => __DIR__ . '/resources/views',
+
+	/**
+     * Templates
+     */
+	'templates'	=> 'getbilly', // folder in child theme to load
 
     /**
      * Activate
