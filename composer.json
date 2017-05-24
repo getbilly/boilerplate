@@ -11,7 +11,8 @@
     ],
 
     "require": {
-        "getbilly/framework" : "0.2.*"
+        "getbilly/framework" : "0.2.*",
+		"bugsnag/bugsnag": "^3.0"
     },
 
 	"autoload": {

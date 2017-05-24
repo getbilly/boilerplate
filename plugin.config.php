@@ -12,6 +12,11 @@ return [
      */
     'assets' => __DIR__ . '/resources/assets/',
 
+	/**
+	 * Bugsnag API
+	 */
+    'bugsnag' => '',
+
     /**
      * Views
      */

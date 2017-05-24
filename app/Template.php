@@ -1,4 +1,7 @@
-<?php namespace Billy\Framework;
+<?php
+namespace MyPlugin;
+
+use MyPlugin\Bugsnag;
 
 class Template {
 
@@ -12,7 +15,12 @@ class Template {
 			$template = __DIR__ . '/resources/templates/' . $filename;
 		}
 
-		include_once $template;
+		try {
+			include_once $template;
+		} catch (\Exception $e) {
+			// 	BugSnag::notifyException($e, null, null);
+		}
+
 		return null;
 	}
 }
