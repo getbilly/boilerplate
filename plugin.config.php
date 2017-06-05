@@ -10,7 +10,7 @@ return [
     /**
      * The asset path.
      */
-    'assets' => __DIR__ . '/resources/assets/',
+    'assets' => '/resources/assets/',
 
 	/**
 	 * Bugsnag API
