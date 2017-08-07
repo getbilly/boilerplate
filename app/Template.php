@@ -1,24 +1,21 @@
-<?php
-namespace MyPlugin;
-
-use MyPlugin\Bugsnag;
+<?php namespace MyPlugin;
 
 class Template {
 
-	public function load()
+	public static function load($filename)
 	{
 		$overwrite = locate_template(Helper::get('templates') . $filename);
 
 		if ($overwrite != null) {
 			$template = $overwrite;
 		} else {
-			$template = __DIR__ . '/resources/templates/' . $filename;
+			$template = dirname(__DIR__) . '/resources/templates/' . $filename;
 		}
 
 		try {
 			include_once $template;
 		} catch (\Exception $e) {
-			// 	BugSnag::notifyException($e, null, null);
+
 		}
 
 		return null;
